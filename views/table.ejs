@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang = "en">
+
+	<head>
+		<meta charset = "utf-8">
+    <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
+		<title><%= dbName %> DB</title>
+ 		<link rel="shortcut icon" href="public/assets/film.ico" type="image/x-icon">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+			integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	</head>
+
+	<body>
+		<div>
+			<% if (errors) { %>
+				<% for (let i = 0; i < errors.length; i++) { %>
+					<div class="container">
+						<div class="alert alert-danger"><%= errors[i].msg %></div>
+					</div>
+				<% } %>
+			<% } %>
+		</div>
+		<div>
+			<table class="table table-striped">
+			  	<thead>
+				    <tr>
+						<% columnsAlt.forEach(function(column) { %>
+				      		<th scope="col"><%= column %></th>
+						<% }); %>
+						  	<th scope="col"></th>
+				    </tr>
+			  	</thead>
+			  	<tbody>
+					<% rows.forEach(function(row) { %>
+				    <tr>
+						<th scope="row"><%= row.id %></th>
+						<%- include(`partials/${table}`, {row: row}); -%>
+				      	<td>
+							<div class="btn-group-vertical">
+								<form method="post" action="/<%= table %>/update/<%= row.id %>">
+									<button type="submit" name="update" class="btn btn-success">Update</button>
+								</form>
+								<form method="post" action="/<%= table %>/delete/<%= row.id %>">
+									<button type="submit" name="delete" class="btn btn-danger">Delete</button>
+								</form>
+							</div>
+						</td>
+				    </tr>
+					<% }); %>
+			  	</tbody>
+			</table>
+			<form method="post" action="/<%= table %>/insert" align="center">
+				<button type="submit" name="insert" class="btn btn-success">Insert</button>
+			</form>
+		</div>
+	</body>

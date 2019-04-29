@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang = "en">
+
+	<head>
+		<meta charset = "utf-8">
+    <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
+		<title><%= dbName %> DB</title>
+ 		<link rel="shortcut icon" href="public/assets/film.ico" type="image/x-icon">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+				integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	</head>
+
+	<body>
+		<% var table = null; %>
+		<% for (let i = 0; i < ((tables.length % amountTablesPerRow) ? ((tables.length / amountTablesPerRow) + 1) : (tables.length / amountTablesPerRow)); i++) { %>
+			<div class="row" style="margin-bottom: 30px;">
+				<% for (let j = 0; j < amountTablesPerRow; j++) { %>
+					<% if (i * amountTablesPerRow + j > tables.length - 1) { %>
+						<div class="col">
+							<div>
+							</div>
+						</div>
+					<% } else { %>
+						<div class="col">
+							<% table = tables[i * amountTablesPerRow + j]; %>
+							<% tableAlt = tablesAlt[i * amountTablesPerRow + j]; %>
+							<div class="card">
+								<div class="card-body">
+									<h5 class="card-title"><%= tableAlt ? tableAlt : (table[0].toUpperCase() + table.slice(1)) %></h5>
+									<a href="/<%= table %>" class="btn btn-primary">Go</a>
+								</div>
+							</div>
+						</div>
+					<% } %>
+				<% } %>
+			</div>
+		<% } %>
+	</body>
